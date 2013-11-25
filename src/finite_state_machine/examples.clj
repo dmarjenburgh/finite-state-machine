@@ -1,6 +1,9 @@
 (ns finite-state-machine.examples
   (:require [finite-state-machine.core :refer :all]
-            [seesaw.core :refer :all]))
+            [seesaw.core :refer :all]
+            [seesaw.graphics :refer :all]
+            [seesaw.color :refer :all]))
+(native!)
 
 ;;;;;;;;;;;;;;;;;
 ;; Simple finite state random-walk
@@ -77,17 +80,22 @@
 ;; You can see it approach the equilibrium state [1/3 1/3 1/3]
 #_ (:state (reduce transition markov-process (range 100)))
 
-;;;;;;;;;;;;;;;;;
-;; Cellular automaton
-;;;;;;;;;;;;;;;;;
-;; Glider gun
 
-(defn- make-grid [rows cols]
-  (vec (repeat rows (vec (repeat cols false)))))
+(comment
 
-(def grid (make-grid 36 9))
+  (let [cvs (canvas :id :canvas :background "#BBBBBB" :paint paintt)
+        t (timer (fn [e] (repaint! cvs)) :delay 1000)]
+    (frame
+      :visible? true
+      :title "Glider Gun"
+      :width (* 39 scale-factor)
+      :height (+ (* 11 scale-factor) v-offset)
+      :on-close :dispose
+      :content cvs))
 
-#_(def configuration)
+  (timer (fn [e] (transition glider-gun :next-gen)) :delay 1000)
+
+  )
 
 
 ;;;;;;;;;;;;;;;;;
@@ -144,7 +152,7 @@
 
 
 (letfn [(tr-fn [current-state event]
-            ((partial (event vcr-transition-map)) @current-state))]
+          ((partial (event vcr-transition-map)) @current-state))]
   (def vcr (finite-state-machine vcr-state tr-fn)))
 
 #_(doseq [action [:power-btn :power-btn :play-btn :power-btn :play-btn :play-btn :pause-btn :pause-btn :play-btn :power-btn]]
