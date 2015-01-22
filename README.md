@@ -1,14 +1,8 @@
-# finite-state-machine
+# Finite-state-machine
 
-A Clojure library designed to ... well, that part is up to you.
+A trivial implementation of a state machine protocol in Clojure.
 
 ## Usage
 
-FIXME
-
-## License
-
-Copyright © 2013 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Investigate the documented examples in src/finite-state-machine/examples.clj in the repl.
+You can also play around with the Game Of Life - Glider Gun in glider-gun.clj or just start it (no interactivity) with lein run.
